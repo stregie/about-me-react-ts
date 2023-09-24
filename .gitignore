@@ -1,6 +1,7 @@
 # My rules
-# start_react.lnk*
-# vite.config.ts.timestamp-*
+start_react.lnk*
+cmd_here.lnk*
+vite.config.ts.timestamp-*
 
 # Logs
 logs
