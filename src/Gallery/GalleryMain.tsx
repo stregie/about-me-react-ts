@@ -70,13 +70,11 @@ function GalleryMain() {
             </select>
           </div>        
 
-          <div className = "row">
+          <div className = "gallery-list">
             { fileList.map((fileInfo: {filename: string, fileindex: number}) => {
                 let imgPath: string = albumPath + fileInfo.filename;
                 return (
-                  <div className = "col-6 col-sm-6 col-md-4 col-xl-3">              
-                    <GalleryListElement key = {fileInfo.fileindex} states = {GalleryListStates} fileInfo = {fileInfo} imgPath = {imgPath} />
-                  </div>
+                  <GalleryListElement key = {imgPath} states = {GalleryListStates} fileInfo = {fileInfo} imgPath = {imgPath} />
                 );
               })
             }

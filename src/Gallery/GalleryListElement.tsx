@@ -15,15 +15,23 @@ function GalleryListElement ({fileInfo, imgPath, states}: {
 }) {
   const [imgLoaded, setImgLoaded] = useState(false);
   const [imgDisplay, setImgDisplay] = useState({display: "none"});
+  const [galleryListElementStyle, setGalleryListElementStyle] = useState({backgroundImage: `url(${imgPath}`});
+
 
   // Placeholder while images are loading
   useEffect(() => {
     setImgLoaded(false);
   }, [imgPath]);
 
+  // Ensures to refresh images on changes (such as selecting album)
+  useEffect(() => {
+    setGalleryListElementStyle({backgroundImage: `url('${imgPath}'`});
+  }, [imgPath, ]);
+
   // Placeholder when images are loaded
   useEffect(() => {
     imgLoaded ? setImgDisplay({display: "block"}) : setImgDisplay({display: "none"});
+    imgLoaded ? setGalleryListElementStyle({backgroundImage: `url('${imgPath}'`}) : setGalleryListElementStyle({backgroundImage: "none"});
   }, [imgLoaded, ]);
   
   // Opens modal if an image is selected from the list
@@ -33,17 +41,9 @@ function GalleryListElement ({fileInfo, imgPath, states}: {
   };
   
   return (
-    <div className = "gallery-list-container">
-      <div className = "gallery-list-thumbnail">          
-        <button className = "gallery-pseudobutton" onClick = {() => galleryPseudoButtonHandler()}>
-          {!imgLoaded && <img className = "img-fluid align-self-center" src = {placeholderImg} alt = {fileInfo.filename} />}
-          <img className = "img-fluid align-self-center" src = {imgPath} alt = {fileInfo.filename} onLoad = {() => setImgLoaded(true)} style = {imgDisplay} />
-        </button>
-      </div>
-
-      <div className = "gallery-list-description">
-        <span>{fileInfo.filename}</span>
-      </div>
+    <div className = "gallery-list-element" style = {galleryListElementStyle} onClick = {() => galleryPseudoButtonHandler()} >
+      {!imgLoaded && <img src = {placeholderImg} alt = {fileInfo.filename} />}
+      <img src = {imgPath} alt = {fileInfo.filename} onLoad = {() => setImgLoaded(true)} style = {imgDisplay} />
     </div>
   );
 };
